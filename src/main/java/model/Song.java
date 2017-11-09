@@ -1,8 +1,13 @@
 package model;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
-public class Song implements interfaces.Song {
+public class Song implements interfaces.Song{
+    SimpleStringProperty path;
+    SimpleStringProperty title;
+    SimpleStringProperty album;
+    SimpleStringProperty interpret;
     @Override
     public String getAlbum() {
         return null;
