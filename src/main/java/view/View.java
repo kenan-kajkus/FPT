@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import interfaces.Song;
 import javafx.scene.control.Button;
