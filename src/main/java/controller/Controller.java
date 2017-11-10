@@ -9,5 +9,11 @@ public class Controller{
     public void link(View view, Model model){
         this.view = view;
         this.model = model;
+        addEventhandler();
+    }
+    private void addEventhandler(){
+        view.setAddAll(() -> {
+            //TODO implements function of addAll  Button ;
+        });
     }
 }
