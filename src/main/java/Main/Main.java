@@ -1,6 +1,6 @@
 package Main;
 
-import controller.ViewController;
+import controller.Controller;
 import model.Model;
 import view.View;
 import javafx.application.Application;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class Main extends Application{
     View view = new View();
     Model model = new Model();
-    ViewController vc = new ViewController();
+    Controller vc = new Controller();
 
     public static void main(String[] args){
         Application.launch();

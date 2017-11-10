@@ -1,6 +1,6 @@
 package model;
 
-public class Model {
+public class Model{
     private Playlist library;
     private Playlist playlist;
 
