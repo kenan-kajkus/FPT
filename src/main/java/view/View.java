@@ -31,4 +31,8 @@ public class View extends BorderPane {
     public void setAddAll(OnClick eh) {
         addAll.setOnAction(e -> {eh.doOnclick();});
     }
+
+    public MusicplayerView getMusicPlayer() {
+        return musicPlayer;
+    }
 }
