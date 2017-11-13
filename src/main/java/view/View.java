@@ -1,5 +1,6 @@
-package View;
+package view;
 
+import interfaces.OnClick;
 import interfaces.Song;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -26,5 +27,12 @@ public class View extends BorderPane {
         setCenter(playlist);
         setRight(new VBox(metaData,musicPlayer));
         setBottom(addAll);
+    }
+    public void setAddAll(OnClick eh) {
+        addAll.setOnAction(e -> {eh.doOnclick();});
+    }
+
+    public MusicplayerView getMusicPlayer() {
+        return musicPlayer;
     }
 }
