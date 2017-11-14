@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import model.Model;
+import model.Playlist;
 
 /**
  * Main GUI class contains all other subparts to generate complete GUI
@@ -31,8 +33,11 @@ public class View extends BorderPane {
     public void setAddAll(OnClick eh) {
         addAll.setOnAction(e -> {eh.doOnclick();});
     }
-
+    public void bindData(Playlist playlist) {
+        this.library.setItems(playlist);
+    }
     public MusicplayerView getMusicPlayer() {
         return musicPlayer;
     }
+
 }

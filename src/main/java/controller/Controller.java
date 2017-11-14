@@ -1,21 +1,25 @@
 package controller;
 
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import model.Model;
 import view.MusicplayerView;
 import view.View;
+import java.io.File;
 
 public class Controller{
+    private File libFolder;
     private Model model;
     private View view;
     public void link(View view, Model model){
         this.view = view;
         this.model = model;
+        this.view.bindData(this.model.getLibrary());
         addEventhandler();
     }
     private void addEventhandler(){
-        view.setAddAll(() -> {
-            //TODO implements function of addAll  Button ;
-        });
+        view.setAddAll(() ->
+            addLib());
         //MusicplayerEventhandler ---
         MusicplayerView tempMPView = view.getMusicPlayer();
         tempMPView.onPlay(() -> {
@@ -34,5 +38,13 @@ public class Controller{
             //TODO implements function of toPlaylistBtn ;
         });
         //---End MusicplayerEventhandler
+    }
+
+    private void addLib(){
+        Stage stage = new Stage();
+        DirectoryChooser libChooser = new DirectoryChooser();
+        libChooser.setTitle("Choose lib folder");
+        libFolder = libChooser.showDialog(stage) ;
+        model.setLibrary(libFolder.listFiles());
     }
 }

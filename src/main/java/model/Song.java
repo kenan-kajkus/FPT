@@ -3,78 +3,91 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
+import java.io.File;
+
 public class Song implements interfaces.Song{
-    SimpleStringProperty path;
-    SimpleStringProperty title;
-    SimpleStringProperty album;
-    SimpleStringProperty interpret;
+    private SimpleStringProperty path = new SimpleStringProperty();
+    private SimpleStringProperty title = new SimpleStringProperty();
+    private SimpleStringProperty album = new SimpleStringProperty();
+    private SimpleStringProperty interpret = new SimpleStringProperty();
+
+    public Song(File path){
+        this.path.set(path.toString());
+        this.title.set(path.getName());
+    }
     @Override
     public String getAlbum() {
-        return null;
+        return album.get() ;
     }
 
     @Override
     public void setAlbum(String album) {
-
+        this.album.set(album);
     }
 
     @Override
     public String getInterpret() {
-        return null;
+        return interpret.get();
     }
 
     @Override
     public void setInterpret(String interpret) {
-
+        this.interpret.set(interpret);
     }
 
     @Override
     public String getPath() {
-        return null;
+        return path.get();
     }
 
     @Override
     public void setPath(String path) {
-
+        this.path.set(path);
     }
 
     @Override
     public String getTitle() {
-        return null;
+        return title.get();
     }
 
     @Override
     public void setTitle(String title) {
-
+        this.title.set(title);
     }
 
     @Override
     public long getId() {
+        //TODO implementation later in project. for now it returns zero
         return 0;
     }
 
     @Override
     public void setId(long id) {
-
+        //TODO implementation later in project.
     }
 
     @Override
     public ObservableValue<String> pathProperty() {
-        return null;
+        return path;
     }
 
     @Override
     public ObservableValue<String> albumProperty() {
-        return null;
+        return album;
     }
 
     @Override
     public ObservableValue<String> interpretProperty() {
-        return null;
+        return interpret;
     }
 
     @Override
     public ObservableValue<String> titleProperty() {
-        return null;
+        return title;
+    }
+
+    @Override
+    public String toString(){
+        return getTitle();
     }
 }
