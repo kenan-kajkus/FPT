@@ -1,6 +1,7 @@
 package view;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
@@ -13,5 +14,10 @@ public class MetaDataView extends VBox {
     TextField albumText = new TextField();
     public MetaDataView(){
         this.getChildren().addAll(title, titleText, interpret, interpretText, album, albumText);
+    }
+    public void set(String title, String interpret, String album){
+        this.titleText.setText(title);
+        this.interpretText.setText(interpret);
+        this.albumText.setText(album);
     }
 }

@@ -29,6 +29,8 @@ public class View extends BorderPane {
         setCenter(playlist);
         setRight(new VBox(metaData,musicPlayer));
         setBottom(addAll);
+        library.setOnMouseClicked(e ->setMetaData());
+        playlist.setOnMouseClicked(e -> setMetaData());
     }
     public void setAddAll(OnClick eh) {
         addAll.setOnAction(e -> {eh.doOnclick();});
@@ -38,6 +40,10 @@ public class View extends BorderPane {
     }
     public MusicplayerView getMusicPlayer() {
         return musicPlayer;
+    }
+    private void setMetaData(){
+        Song tempSong = library.getSelectionModel().getSelectedItem();
+        metaData.set(tempSong.getTitle(),tempSong.getInterpret(),tempSong.getAlbum());
     }
 
 }
