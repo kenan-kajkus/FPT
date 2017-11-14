@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import model.Model;
 import model.Playlist;
 
 /**
@@ -43,7 +42,7 @@ public class View extends BorderPane {
     }
     private void setMetaData(){
         Song tempSong = library.getSelectionModel().getSelectedItem();
-        metaData.set(tempSong.getTitle(),tempSong.getInterpret(),tempSong.getAlbum());
+        metaData.setMetaData(tempSong.getTitle(),tempSong.getInterpret(),tempSong.getAlbum());
     }
 
 }
