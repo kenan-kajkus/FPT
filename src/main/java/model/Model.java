@@ -1,15 +1,13 @@
 package model;
 
-import org.apache.commons.lang.ObjectUtils;
 
 import java.io.File;
-import java.rmi.RemoteException;
 
 public class Model{
     private Playlist library = new Playlist();
     private Playlist playlist;
 
-    public Playlist getLibrary() {
+    public Playlist getLibrary(){
         return library;
     }
 
@@ -19,14 +17,9 @@ public class Model{
 
     public void setLibrary(File[] file) {
         for (int i = 0; i < file.length; i++){
-               System.out.println(file[i].toString());
-               Song temp = new Song(file[i]);
-               System.out.println("test1");
-               try {
-                   library.addSong(temp);
-               }catch (RemoteException w){}
-               System.out.println("test2");
-
+                Song temp = new Song(file[i]);
+                library.add(temp);
+            System.out.println(library.get(i).toString());
         }
     }
 }

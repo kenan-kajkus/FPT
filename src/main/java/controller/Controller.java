@@ -6,18 +6,15 @@ import model.Model;
 import view.MusicplayerView;
 import view.View;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Controller{
     private File libFolder;
-    private File[] files;
     private Model model;
     private View view;
     public void link(View view, Model model){
         this.view = view;
         this.model = model;
-        this.view.bindData(model.getLibrary());
+        this.view.bindData(this.model.getLibrary());
         addEventhandler();
     }
     private void addEventhandler(){
@@ -49,6 +46,5 @@ public class Controller{
         libChooser.setTitle("Choose lib folder");
         libFolder = libChooser.showDialog(stage) ;
         model.setLibrary(libFolder.listFiles());
-        model.getLibrary().get(1);
     }
 }

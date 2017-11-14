@@ -10,58 +10,6 @@ import java.util.Iterator;
 public class Playlist extends ModifiableObservableListBase<Song> implements interfaces.Playlist{
     ArrayList<Song> songs = new ArrayList<>();
 
-
-    @Override
-    public boolean addSong(Song s) throws RemoteException {
-        songs.add(s);
-        return this.add(s);
-    }
-
-    @Override
-    public boolean deleteSong(Song s) throws RemoteException {
-        return false;
-    }
-
-    @Override
-    public boolean deleteSongByID(long id) throws RemoteException {
-        return false;
-    }
-
-    @Override
-    public void setList(ArrayList<Song> s) throws RemoteException {
-
-    }
-
-    @Override
-    public ArrayList<Song> getList() throws RemoteException {
-        return songs;
-    }
-
-    @Override
-    public void clearPlaylist() throws RemoteException {
-
-    }
-
-    @Override
-    public int sizeOfPlaylist() throws RemoteException {
-        return 0;
-    }
-
-    @Override
-    public Song findSongByPath(String name) throws RemoteException {
-        return null;
-    }
-
-    @Override
-    public Song findSongByID(long id) throws RemoteException {
-        return null;
-    }
-
-    @Override
-    public Iterator<Song> iterator() {
-        return null;
-    }
-
     @Override
     public Song get(int index) {
         return songs.get(index);
@@ -69,7 +17,7 @@ public class Playlist extends ModifiableObservableListBase<Song> implements inte
 
     @Override
     public int size() {
-        return 0;
+        return songs.size();
     }
 
     @Override
@@ -79,11 +27,62 @@ public class Playlist extends ModifiableObservableListBase<Song> implements inte
 
     @Override
     protected Song doSet(int index, Song element) {
-        return null;
+        return songs.set(index, element);
     }
 
     @Override
     protected Song doRemove(int index) {
+        return songs.remove(index);
+    }
+
+    @Override
+    public boolean addSong(Song s) throws RemoteException {
+        //TODO future use
+        return false;
+    }
+
+    @Override
+    public boolean deleteSong(Song s) throws RemoteException {
+        //TODO future use
+        return false;
+    }
+    @Override
+    public boolean deleteSongByID(long id) throws RemoteException {
+        //TODO future use
+        return false;
+    }
+
+    @Override
+    public void setList(ArrayList<Song> s) throws RemoteException {
+        //TODO future use
+    }
+
+    @Override
+    public ArrayList<Song> getList() throws RemoteException {
+        //TODO future use
+        return null;
+    }
+
+    @Override
+    public void clearPlaylist() throws RemoteException {
+        //TODO future use
+    }
+
+    @Override
+    public int sizeOfPlaylist() throws RemoteException {
+        //TODO future use
+        return 0;
+    }
+
+    @Override
+    public Song findSongByPath(String name) throws RemoteException {
+        //TODO future use
+        return null;
+    }
+
+    @Override
+    public Song findSongByID(long id) throws RemoteException {
+        //TODO future use
         return null;
     }
 }

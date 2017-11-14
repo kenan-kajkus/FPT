@@ -3,7 +3,6 @@ package view;
 import interfaces.OnClick;
 import interfaces.Song;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -18,7 +17,7 @@ import model.Playlist;
 */
 public class View extends BorderPane {
     private SaveLoadView saveLoad = new SaveLoadView();
-    private ListView<Song> library = new ListView<Song>();
+    private ListView<Song> library = new ListView<>();
     private ListView<Song> playlist = new ListView<>();
     private MetaDataView metaData = new MetaDataView();
     private MusicplayerView musicPlayer = new MusicplayerView();

@@ -7,37 +7,37 @@ import java.io.File;
 
 public class Song implements interfaces.Song{
     private SimpleStringProperty path = new SimpleStringProperty();
-    SimpleStringProperty title = new SimpleStringProperty();
-    SimpleStringProperty album;
-    SimpleStringProperty interpret;
+    private SimpleStringProperty title = new SimpleStringProperty();
+    private SimpleStringProperty album = new SimpleStringProperty();
+    private SimpleStringProperty interpret = new SimpleStringProperty();
 
     public Song(File path){
         this.path.set(path.toString());
-        this.path.set(path.getName());
+        this.title.set(path.getName());
     }
     @Override
     public String getAlbum() {
-        return null;
+        return album.get() ;
     }
 
     @Override
     public void setAlbum(String album) {
-
+        this.album.set(album);
     }
 
     @Override
     public String getInterpret() {
-        return null;
+        return interpret.get();
     }
 
     @Override
     public void setInterpret(String interpret) {
-
+        this.interpret.set(interpret);
     }
 
     @Override
     public String getPath() {
-        return path.getName();
+        return path.get();
     }
 
     @Override
@@ -47,22 +47,23 @@ public class Song implements interfaces.Song{
 
     @Override
     public String getTitle() {
-        return title.getName();
+        return title.get();
     }
 
     @Override
     public void setTitle(String title) {
-
+        this.title.set(title);
     }
 
     @Override
     public long getId() {
+        //TODO implementation later in project. for now it returns zero
         return 0;
     }
 
     @Override
     public void setId(long id) {
-
+        //TODO implementation later in project.
     }
 
     @Override
@@ -83,5 +84,10 @@ public class Song implements interfaces.Song{
     @Override
     public ObservableValue<String> titleProperty() {
         return title;
+    }
+
+    @Override
+    public String toString(){
+        return getTitle();
     }
 }
