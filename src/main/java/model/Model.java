@@ -17,9 +17,10 @@ public class Model{
 
     public void setLibrary(File[] file) {
         for (int i = 0; i < file.length; i++){
+            if(file[i].toString().contains(".mp3")) {
                 Song temp = new Song(file[i]);
                 library.add(temp);
-            System.out.println(library.get(i).toString());
+            }
         }
     }
 }
