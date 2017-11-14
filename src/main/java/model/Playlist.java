@@ -8,10 +8,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Playlist extends ModifiableObservableListBase<Song> implements interfaces.Playlist{
-    ArrayList<Song> songs;
+    ArrayList<Song> songs = new ArrayList<>();
+
+
     @Override
     public boolean addSong(Song s) throws RemoteException {
-        return false;
+        songs.add(s);
+        return this.add(s);
     }
 
     @Override
@@ -31,7 +34,7 @@ public class Playlist extends ModifiableObservableListBase<Song> implements inte
 
     @Override
     public ArrayList<Song> getList() throws RemoteException {
-        return null;
+        return songs;
     }
 
     @Override
@@ -61,7 +64,7 @@ public class Playlist extends ModifiableObservableListBase<Song> implements inte
 
     @Override
     public Song get(int index) {
-        return null;
+        return songs.get(index);
     }
 
     @Override
@@ -71,7 +74,7 @@ public class Playlist extends ModifiableObservableListBase<Song> implements inte
 
     @Override
     protected void doAdd(int index, Song element) {
-
+        songs.add(element);
     }
 
     @Override

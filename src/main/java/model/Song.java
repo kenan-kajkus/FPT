@@ -3,11 +3,18 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
+import java.io.File;
+
 public class Song implements interfaces.Song{
-    SimpleStringProperty path;
-    SimpleStringProperty title;
+    private SimpleStringProperty path = new SimpleStringProperty();
+    SimpleStringProperty title = new SimpleStringProperty();
     SimpleStringProperty album;
     SimpleStringProperty interpret;
+
+    public Song(File path){
+        this.path.set(path.toString());
+        this.path.set(path.getName());
+    }
     @Override
     public String getAlbum() {
         return null;
@@ -30,17 +37,17 @@ public class Song implements interfaces.Song{
 
     @Override
     public String getPath() {
-        return null;
+        return path.getName();
     }
 
     @Override
     public void setPath(String path) {
-
+        this.path.set(path);
     }
 
     @Override
     public String getTitle() {
-        return null;
+        return title.getName();
     }
 
     @Override
@@ -60,21 +67,21 @@ public class Song implements interfaces.Song{
 
     @Override
     public ObservableValue<String> pathProperty() {
-        return null;
+        return path;
     }
 
     @Override
     public ObservableValue<String> albumProperty() {
-        return null;
+        return album;
     }
 
     @Override
     public ObservableValue<String> interpretProperty() {
-        return null;
+        return interpret;
     }
 
     @Override
     public ObservableValue<String> titleProperty() {
-        return null;
+        return title;
     }
 }
