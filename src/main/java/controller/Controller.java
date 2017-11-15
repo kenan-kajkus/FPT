@@ -1,6 +1,7 @@
 package controller;
 
 import interfaces.Song;
+import javafx.scene.control.ListView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.Model;
@@ -24,6 +25,12 @@ public class Controller{
         view.onToPlaylist((song) -> {
             addToPlaylist(song);
         });
+        view.showPlayMeta(() ->{
+            showMetaData(view.getPlaylist());
+        });
+        view.showLibMeta(() ->{
+            showMetaData(view.getLibrary());
+        });
         //MusicplayerEventhandler ---
         MusicplayerView tempMPView = view.getMusicPlayer();
         tempMPView.onPlay(() -> {
@@ -42,7 +49,8 @@ public class Controller{
     }
 
     private void addToPlaylist(Song s) {
-        model.getPlaylist().add(s);
+        if(s!=null)
+            model.getPlaylist().add(s);
     }
 
     private void addLib(){
@@ -51,5 +59,10 @@ public class Controller{
         libChooser.setTitle("Choose lib folder");
         libFolder = libChooser.showDialog(stage) ;
         model.setLibrary(libFolder.listFiles());
+    }
+
+    private void showMetaData(ListView<Song> listView){
+        Song tempSong = listView.getSelectionModel().getSelectedItem();
+        view.setMetaData(tempSong.getTitle(),tempSong.getInterpret(),tempSong.getAlbum());
     }
 }
