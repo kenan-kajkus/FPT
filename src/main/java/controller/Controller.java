@@ -1,5 +1,6 @@
 package controller;
 
+import interfaces.Song;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.Model;
@@ -14,12 +15,15 @@ public class Controller{
     public void link(View view, Model model){
         this.view = view;
         this.model = model;
-        this.view.bindData(this.model.getLibrary());
+        this.view.bindData(this.model.getLibrary(),this.model.getPlaylist());
         addEventhandler();
     }
     private void addEventhandler(){
         view.setAddAll(() ->
             addLib());
+        view.onToPlaylist((song) -> {
+            addToPlaylist(song);
+        });
         //MusicplayerEventhandler ---
         MusicplayerView tempMPView = view.getMusicPlayer();
         tempMPView.onPlay(() -> {
@@ -34,10 +38,11 @@ public class Controller{
         tempMPView.onCommit(() -> {
             //TODO implements function of commitBtn ;
         });
-        tempMPView.onToPlaylist(() -> {
-            //TODO implements function of toPlaylistBtn ;
-        });
         //---End MusicplayerEventhandler
+    }
+
+    private void addToPlaylist(Song s) {
+        model.getPlaylist().add(s);
     }
 
     private void addLib(){

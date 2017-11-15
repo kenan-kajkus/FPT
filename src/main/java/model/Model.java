@@ -5,7 +5,7 @@ import java.io.File;
 
 public class Model{
     private Playlist library = new Playlist();
-    private Playlist playlist;
+    private Playlist playlist = new Playlist();
 
     public Playlist getLibrary(){
         return library;

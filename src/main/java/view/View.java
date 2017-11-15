@@ -1,6 +1,7 @@
 package view;
 
 import interfaces.OnClick;
+import interfaces.OnClickSong;
 import interfaces.Song;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -21,12 +22,13 @@ public class View extends BorderPane {
     private MetaDataView metaData = new MetaDataView();
     private MusicplayerView musicPlayer = new MusicplayerView();
     private Button addAll = new Button("add All");
+    private Button toPlaylist = new Button("Add to Playlist");
 
     public View(){
         setTop(saveLoad);
         setLeft(library);
         setCenter(playlist);
-        setRight(new VBox(metaData,musicPlayer));
+        setRight(new VBox(metaData,musicPlayer,toPlaylist));
         setBottom(addAll);
         library.setOnMouseClicked(e ->setMetaData());
         playlist.setOnMouseClicked(e -> setMetaData());
@@ -34,8 +36,12 @@ public class View extends BorderPane {
     public void setAddAll(OnClick eh) {
         addAll.setOnAction(e -> {eh.doOnclick();});
     }
-    public void bindData(Playlist playlist) {
-        this.library.setItems(playlist);
+    public void onToPlaylist(OnClickSong eh){
+        toPlaylist.setOnAction( song ->eh.doOnclick(library.getSelectionModel().getSelectedItem()));
+    }
+    public void bindData(Playlist library, Playlist playlist) {
+        this.library.setItems(library);
+        this.playlist.setItems(playlist);
     }
     public MusicplayerView getMusicPlayer() {
         return musicPlayer;

@@ -11,10 +11,9 @@ public class MusicplayerView extends VBox {
     private Button pause = new Button("PAUSE");
     private Button nextsong = new Button("next Song");
     private Button commit = new Button("COMMIT");
-    private Button toPlaylist = new Button("Add to Playlist");
     public MusicplayerView(){
         firstRow.getChildren().addAll(play, pause, nextsong, commit);
-        getChildren().addAll(firstRow,toPlaylist);
+        getChildren().addAll(firstRow);
     }
 
     public void onPlay(OnClick eh){
@@ -28,8 +27,5 @@ public class MusicplayerView extends VBox {
     }
     public void onCommit(OnClick eh){
         commit.setOnAction(e -> eh.doOnclick());
-    }
-    public void onToPlaylist(OnClick eh){
-        toPlaylist.setOnAction(e -> eh.doOnclick());
     }
 }
