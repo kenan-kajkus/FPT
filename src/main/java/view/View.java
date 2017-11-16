@@ -3,10 +3,7 @@ package view;
 import interfaces.OnClick;
 import interfaces.OnClickSong;
 import interfaces.Song;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -113,4 +110,12 @@ public class View extends BorderPane {
 
     //SETTER <<<---***
 
+    public void alertNoFiles() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("No Files selected");
+        alert.setHeaderText(null);
+        alert.setContentText("Please chose files");
+
+        alert.showAndWait();
+    }
 }

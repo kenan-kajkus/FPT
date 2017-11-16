@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import model.Model;
 import view.View;
 import java.io.File;
+import java.util.ArrayList;
 
 public class Controller{
     Media m;
@@ -90,11 +91,35 @@ public class Controller{
     }
 
     private void addLib(){
+        model.getLibrary().clear();
         Stage stage = new Stage();
         DirectoryChooser libChooser = new DirectoryChooser();
         libChooser.setTitle("Choose lib folder");
-        libFolder = libChooser.showDialog(stage) ;
-        model.setLibrary(libFolder.listFiles());
+        //checks if no folder is chosen
+        if((libFolder = libChooser.showDialog(stage))==null)
+            return;
+        File files[];
+        try {
+            files = chooseMp3(libFolder);
+        }catch (NullPointerException e){
+            view.alertNoFiles();
+            return;
+        }
+        model.setLibrary(files);
+    }
+
+    private File[] chooseMp3(File folder)throws NullPointerException{
+        File[] files = folder.listFiles();
+        ArrayList<File> mp3s = new ArrayList<>();
+        for (int i = 0; i<files.length;i++){
+           if(files[i].toString().indexOf(".mp3",files[i].toString().length()-5)>0){
+               mp3s.add(files[i]);
+           }
+        }
+        if (mp3s.size()==0) {
+            throw new NullPointerException();
+        }
+        return mp3s.toArray(new File[0] );
     }
 
     private void showMetaData(ListView<Song> listView){
