@@ -12,10 +12,9 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Controller{
-    Media m;
-    int currentSong = 0;
+    private Media m;
+    private int currentSong = 0;
     private MediaPlayer mp;
-    private File libFolder;
     private Model model;
     private View view;
     public void link(View view, Model model){
@@ -91,7 +90,7 @@ public class Controller{
     }
 
     private void addLib(){
-        model.getLibrary().clear();
+        File libFolder;
         Stage stage = new Stage();
         DirectoryChooser libChooser = new DirectoryChooser();
         libChooser.setTitle("Choose lib folder");
@@ -111,10 +110,10 @@ public class Controller{
     private File[] chooseMp3(File folder)throws NullPointerException{
         File[] files = folder.listFiles();
         ArrayList<File> mp3s = new ArrayList<>();
-        for (int i = 0; i<files.length;i++){
-           if(files[i].toString().indexOf(".mp3",files[i].toString().length()-5)>0){
-               mp3s.add(files[i]);
-           }
+        for (File file: files) {
+            if(file.toString().indexOf(".mp3",file.toString().length()-5)>0){
+                mp3s.add(file);
+            }
         }
         if (mp3s.size()==0) {
             throw new NullPointerException();

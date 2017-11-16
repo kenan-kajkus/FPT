@@ -15,9 +15,10 @@ public class Model{
         return playlist;
     }
 
-    public void setLibrary(File[] file) {
-        for (int i = 0; i < file.length; i++){
-                library.add(new Song(file[i]));
+    public void setLibrary(File[] files) {
+        library.clear();
+        for(File file: files){
+            library.add(new Song(file));
         }
     }
 }
