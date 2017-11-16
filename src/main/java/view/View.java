@@ -19,7 +19,6 @@ public class View extends BorderPane {
     private SaveLoadView saveLoad = new SaveLoadView();
     private ListView<Song> library = new ListView<>();
     private ListView<Song> playlist = new ListView<>();
-    //private MetaDataView metaData = new MetaDataView();
     private VBox metaData = new VBox();
     private final Label album = new Label("Album:");
     private final Label interpret = new Label("Interpret:");

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Playlist extends ModifiableObservableListBase<Song> implements interfaces.Playlist{
-    ArrayList<Song> songs = new ArrayList<>();
+    private ArrayList<Song> songs = new ArrayList<>();
 
     @Override
     public Song get(int index) {
