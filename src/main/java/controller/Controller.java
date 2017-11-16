@@ -40,7 +40,7 @@ public class Controller{
             currentSong = 0;
         mp = new MediaPlayer(new Media(new File(model.getPlaylist().get(currentSong).getPath()).toURI().toString()));
         mp.play();
-        mp.setOnEndOfMedia(()-> newmp());
+        mp.setOnEndOfMedia(this::newmp);
         System.gc();
     }
 
@@ -64,7 +64,7 @@ public class Controller{
             m  = new Media(new File(model.getPlaylist().get(0).getPath()).toURI().toString());
         if(mp==null) {
             mp = new MediaPlayer(m);
-            mp.setOnEndOfMedia(() -> newmp());
+            mp.setOnEndOfMedia(this::newmp);
         }
         mp.play();
     }
@@ -76,7 +76,7 @@ public class Controller{
         if (++currentSong >= model.getPlaylist().size())
             currentSong = 0;
         mp = new MediaPlayer(new Media(new File(model.getPlaylist().get(currentSong).getPath()).toURI().toString()));
-        mp.setOnEndOfMedia(() -> newmp());
+        mp.setOnEndOfMedia(this::newmp);
         mp.play();
     }
     private void addLib(){
@@ -99,9 +99,11 @@ public class Controller{
     private File[] chooseMp3(File folder){
         File[] files = folder.listFiles();
         ArrayList<File> mp3s = new ArrayList<>();
-        for (File file: files) {
-            if(file.toString().indexOf(".mp3",file.toString().length()-5)>0){
-                mp3s.add(file);
+        if (files != null) {
+            for (File file: files) {
+                if(file.toString().indexOf(".mp3",file.toString().length()-5)>0){
+                    mp3s.add(file);
+                }
             }
         }
         return mp3s.toArray(new File[0] );
