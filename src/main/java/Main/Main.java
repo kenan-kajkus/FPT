@@ -8,12 +8,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application{
-    View view = new View();
-    Model model = new Model();
-    Controller vc = new Controller();
+    private View view = new View();
+    private Model model = new Model();
+    private Controller vc = new Controller();
 
     public static void main(String[] args){
-        Application.launch();
+        launch();
     }
 
     @Override

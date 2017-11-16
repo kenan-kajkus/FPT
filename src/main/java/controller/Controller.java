@@ -24,48 +24,16 @@ public class Controller{
         addEventhandler();
     }
     private void addEventhandler(){
-        view.setAddAll(() ->
-            addLib());
-        view.onToPlaylist((song) -> {
-            addToPlaylist(song);
-        });
-        view.showPlayMeta(() ->{
-            showMetaData(view.getPlaylist());
-        });
-        view.showLibMeta(() ->{
-            showMetaData(view.getLibrary());
-        });
-        view.removeFromPlaylist(() ->{
-            model.getPlaylist().remove(view.getPlaylist().getSelectionModel().getSelectedItem());
-        });
-        view.commit(() ->{
-            Song song = view.getLibrary().getSelectionModel().getSelectedItem();
-            song.setInterpret(view.getInterpretText().getText());
-            song.setAlbum(view.getAlbumText().getText());
-            song.setTitle(view.getTitleText().getText());
-        });
-        view.play(() ->{
-            if(m==null)
-                m  = new Media(new File(model.getPlaylist().get(0).getPath()).toURI().toString());
-            if(mp==null) {
-                mp = new MediaPlayer(m);
-                mp.setOnEndOfMedia(() -> newmp());
-            }
-            mp.play();
-        });
-
-        view.pause(() -> mp.pause());
-
-        view.next(()->{
-            mp.stop();
-            if (++currentSong >= model.getPlaylist().size())
-                currentSong = 0;
-            mp = new MediaPlayer(new Media(new File(model.getPlaylist().get(currentSong).getPath()).toURI().toString()));
-            mp.setOnEndOfMedia(() -> newmp());
-            mp.play();
-        });
+        view.setAddAll(this::addLib);
+        view.onToPlaylist(this::addToPlaylist);
+        view.showPlayMeta(() -> showMetaData(view.getPlaylist()));
+        view.showLibMeta(() -> showMetaData(view.getLibrary()));
+        view.removeFromPlaylist(this::removeFromPlaylist);
+        view.commit(this::commit);
+        view.play(this::play);
+        view.pause(this::pause);
+        view.next(this::next);
     }
-
 
     private void newmp(){
         if (++currentSong >= model.getPlaylist().size())
@@ -81,6 +49,36 @@ public class Controller{
             model.getPlaylist().add(s);
     }
 
+    private void removeFromPlaylist(){
+        model.getPlaylist().remove(view.getPlaylist().getSelectionModel().getSelectedItem());
+    }
+
+    private void commit(){
+        Song song = view.getLibrary().getSelectionModel().getSelectedItem();
+        song.setInterpret(view.getInterpretText().getText());
+        song.setAlbum(view.getAlbumText().getText());
+        song.setTitle(view.getTitleText().getText());
+    }
+    private void play(){
+        if(m==null)
+            m  = new Media(new File(model.getPlaylist().get(0).getPath()).toURI().toString());
+        if(mp==null) {
+            mp = new MediaPlayer(m);
+            mp.setOnEndOfMedia(() -> newmp());
+        }
+        mp.play();
+    }
+    private void pause(){
+        mp.pause();
+    }
+    private void next(){
+        mp.stop();
+        if (++currentSong >= model.getPlaylist().size())
+            currentSong = 0;
+        mp = new MediaPlayer(new Media(new File(model.getPlaylist().get(currentSong).getPath()).toURI().toString()));
+        mp.setOnEndOfMedia(() -> newmp());
+        mp.play();
+    }
     private void addLib(){
         File libFolder;
         Stage stage = new Stage();
