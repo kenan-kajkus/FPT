@@ -5,7 +5,7 @@ import java.io.File;
 
 public class Model{
     private Playlist library = new Playlist();
-    private Playlist playlist;
+    private Playlist playlist = new Playlist();
 
     public Playlist getLibrary(){
         return library;
@@ -15,12 +15,10 @@ public class Model{
         return playlist;
     }
 
-    public void setLibrary(File[] file) {
-        for (int i = 0; i < file.length; i++){
-            if(file[i].toString().contains(".mp3")) {
-                Song temp = new Song(file[i]);
-                library.add(temp);
-            }
+    public void setLibrary(File[] files) {
+        library.clear();
+        for(File file: files){
+            library.add(new Song(file));
         }
     }
 }
