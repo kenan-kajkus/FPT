@@ -49,25 +49,19 @@ public class Controller{
                 m  = new Media(new File(model.getPlaylist().get(0).getPath()).toURI().toString());
             if(mp==null) {
                 mp = new MediaPlayer(m);
-                mp.setOnEndOfMedia(() -> {
-                    newmp();
-                });
+                mp.setOnEndOfMedia(() -> newmp());
             }
             mp.play();
         });
 
-        view.pause(() ->{
-            mp.pause();
-        });
+        view.pause(() -> mp.pause());
 
         view.next(()->{
             mp.stop();
             if (++currentSong >= model.getPlaylist().size())
                 currentSong = 0;
             mp = new MediaPlayer(new Media(new File(model.getPlaylist().get(currentSong).getPath()).toURI().toString()));
-            mp.setOnEndOfMedia(() ->{
-                newmp();
-            });
+            mp.setOnEndOfMedia(() -> newmp());
             mp.play();
         });
     }
@@ -78,9 +72,7 @@ public class Controller{
             currentSong = 0;
         mp = new MediaPlayer(new Media(new File(model.getPlaylist().get(currentSong).getPath()).toURI().toString()));
         mp.play();
-        mp.setOnEndOfMedia(()->{
-            newmp();
-        });
+        mp.setOnEndOfMedia(()-> newmp());
         System.gc();
     }
 
@@ -95,28 +87,24 @@ public class Controller{
         DirectoryChooser libChooser = new DirectoryChooser();
         libChooser.setTitle("Choose lib folder");
         //checks if no folder is chosen
-        if((libFolder = libChooser.showDialog(stage))==null)
-            return;
-        File files[];
-        try {
+        if((libFolder = libChooser.showDialog(stage))!=null) {
+            File files[];
             files = chooseMp3(libFolder);
-        }catch (NullPointerException e){
-            view.alertNoFiles();
-            return;
+            if(files.length>0){
+                model.setLibrary(files);
+            }else{
+                view.alertNoFiles();
+            }
         }
-        model.setLibrary(files);
     }
 
-    private File[] chooseMp3(File folder)throws NullPointerException{
+    private File[] chooseMp3(File folder){
         File[] files = folder.listFiles();
         ArrayList<File> mp3s = new ArrayList<>();
         for (File file: files) {
             if(file.toString().indexOf(".mp3",file.toString().length()-5)>0){
                 mp3s.add(file);
             }
-        }
-        if (mp3s.size()==0) {
-            throw new NullPointerException();
         }
         return mp3s.toArray(new File[0] );
     }
