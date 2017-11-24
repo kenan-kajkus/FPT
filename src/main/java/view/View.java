@@ -114,6 +114,9 @@ public class View extends BorderPane {
         return interpretText;
     }
 
+    private SerializableStrategy getStrategy(){
+        return strategyChoise.getSelectionModel().getSelectedItem();
+    }
     //GETTER <<<---***
     //***---->>> SETTER
     public void setMetaData(String title, String interpret, String album){
