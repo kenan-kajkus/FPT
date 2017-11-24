@@ -76,4 +76,8 @@ public class JdbcStrategy implements SerializableStrategy {
     public void closeReadablePlaylist() {
 
     }
+    @Override
+    public String toString() {
+        return JdbcStrategy.class.getSimpleName();
+    }
 }

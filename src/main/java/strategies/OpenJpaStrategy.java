@@ -76,4 +76,8 @@ public class OpenJpaStrategy implements SerializableStrategy {
     public void closeReadablePlaylist() {
 
     }
+    @Override
+    public String toString() {
+        return OpenJpaStrategy.class.getSimpleName();
+    }
 }

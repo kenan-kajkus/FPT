@@ -9,6 +9,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Playlist;
+import strategies.BinaryStrategy;
+import strategies.JdbcStrategy;
+import strategies.XmlStrategy;
 
 /**
  * Main GUI class contains all other subparts to generate complete GUI
@@ -42,9 +45,6 @@ public class View extends BorderPane {
     private Button commit = new Button("COMMIT");
 
     public View(){
-        strategyChoise.getItems().addAll(
-
-        );
         saveLoad.getChildren().addAll(strategyChoise,load,save);
         metaData.getChildren().addAll(title, titleText, interpret, interpretText, album, albumText);
         firstRow.getChildren().addAll(play, pause, nextsong, commit);
@@ -58,6 +58,13 @@ public class View extends BorderPane {
     public void bindData(Playlist library, Playlist playlist) {
         this.library.setItems(library);
         this.playlist.setItems(playlist);
+        strategyChoise.getItems().addAll(
+            new BinaryStrategy(),
+                new XmlStrategy(),
+                new JdbcStrategy(),
+                new XmlStrategy()
+
+        );
     }
     public void showLibMeta(OnClick eh){
         library.setOnMouseClicked(e -> eh.doOnclick());

@@ -76,4 +76,8 @@ public class XmlStrategy implements SerializableStrategy {
     public void closeReadablePlaylist() {
 
     }
+    @Override
+    public String toString() {
+        return XmlStrategy.class.getSimpleName();
+    }
 }

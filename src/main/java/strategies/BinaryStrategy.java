@@ -76,4 +76,9 @@ public class BinaryStrategy implements SerializableStrategy {
     public void closeReadablePlaylist() {
 
     }
+
+    @Override
+    public String toString() {
+        return BinaryStrategy.class.getSimpleName();
+    }
 }
