@@ -2,6 +2,7 @@ package view;
 
 import interfaces.OnClick;
 import interfaces.OnClickSong;
+import interfaces.SerializableStrategy;
 import interfaces.Song;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -16,7 +17,10 @@ import model.Playlist;
  *
 */
 public class View extends BorderPane {
-    private SaveLoadView saveLoad = new SaveLoadView();
+    private HBox saveLoad = new HBox();
+    private ComboBox<SerializableStrategy> strategyChoise = new ComboBox<>();
+    private Button load = new Button("Load");
+    private Button save = new Button("Save");
     private ListView<Song> library = new ListView<>();
     private ListView<Song> playlist = new ListView<>();
     private VBox metaData = new VBox();
@@ -38,6 +42,10 @@ public class View extends BorderPane {
     private Button commit = new Button("COMMIT");
 
     public View(){
+        strategyChoise.getItems().addAll(
+
+        );
+        saveLoad.getChildren().addAll(strategyChoise,load,save);
         metaData.getChildren().addAll(title, titleText, interpret, interpretText, album, albumText);
         firstRow.getChildren().addAll(play, pause, nextsong, commit);
         musicplayer.getChildren().addAll(firstRow);
