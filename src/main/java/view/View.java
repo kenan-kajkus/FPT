@@ -2,12 +2,16 @@ package view;
 
 import interfaces.OnClick;
 import interfaces.OnClickSong;
+import interfaces.SerializableStrategy;
 import interfaces.Song;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Playlist;
+import strategies.BinaryStrategy;
+import strategies.JdbcStrategy;
+import strategies.XmlStrategy;
 
 /**
  * Main GUI class contains all other subparts to generate complete GUI
@@ -16,7 +20,10 @@ import model.Playlist;
  *
 */
 public class View extends BorderPane {
-    private SaveLoadView saveLoad = new SaveLoadView();
+    private HBox saveLoad = new HBox();
+    private ComboBox<SerializableStrategy> strategyChoise = new ComboBox<>();
+    private Button load = new Button("Load");
+    private Button save = new Button("Save");
     private ListView<Song> library = new ListView<>();
     private ListView<Song> playlist = new ListView<>();
     private VBox metaData = new VBox();
@@ -38,6 +45,7 @@ public class View extends BorderPane {
     private Button commit = new Button("COMMIT");
 
     public View(){
+        saveLoad.getChildren().addAll(strategyChoise,load,save);
         metaData.getChildren().addAll(title, titleText, interpret, interpretText, album, albumText);
         firstRow.getChildren().addAll(play, pause, nextsong, commit);
         musicplayer.getChildren().addAll(firstRow);
@@ -50,6 +58,13 @@ public class View extends BorderPane {
     public void bindData(Playlist library, Playlist playlist) {
         this.library.setItems(library);
         this.playlist.setItems(playlist);
+        strategyChoise.getItems().addAll(
+            new BinaryStrategy(),
+                new XmlStrategy(),
+                new JdbcStrategy(),
+                new XmlStrategy()
+
+        );
     }
     public void showLibMeta(OnClick eh){
         library.setOnMouseClicked(e -> eh.doOnclick());
@@ -78,6 +93,12 @@ public class View extends BorderPane {
     public void next(OnClick eh){
         nextsong.setOnAction(e -> eh.doOnclick());
     }
+    public void load(OnClick eh){
+        load.setOnAction(e -> eh.doOnclick());
+    }
+    public void save(OnClick eh){
+        save.setOnAction(e -> eh.doOnclick());
+    }
     //***---->>> GETTER
     public ListView<Song> getLibrary() {
         return library;
@@ -99,6 +120,9 @@ public class View extends BorderPane {
         return interpretText;
     }
 
+    public SerializableStrategy getStrategy(){
+        return strategyChoise.getSelectionModel().getSelectedItem();
+    }
     //GETTER <<<---***
     //***---->>> SETTER
     public void setMetaData(String title, String interpret, String album){

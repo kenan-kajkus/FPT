@@ -3,9 +3,9 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
-import java.io.File;
+import java.io.*;
 
-public class Song implements interfaces.Song{
+public class Song implements interfaces.Song, Serializable, Externalizable{
     private SimpleStringProperty path = new SimpleStringProperty();
     private SimpleStringProperty title = new SimpleStringProperty();
     private SimpleStringProperty album = new SimpleStringProperty();
@@ -89,5 +89,21 @@ public class Song implements interfaces.Song{
     @Override
     public String toString(){
         return getTitle();
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeObject(getPath());
+        out.writeObject(getTitle());
+        out.writeObject(getAlbum());
+        out.writeObject(getInterpret());
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+         path = new SimpleStringProperty((String) in.readObject());
+         title = new SimpleStringProperty((String)in.readObject());
+         album = new SimpleStringProperty((String) in.readObject());
+         interpret = new SimpleStringProperty((String) in.readObject());
     }
 }
