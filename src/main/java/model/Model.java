@@ -21,4 +21,7 @@ public class Model{
             library.add(new Song(file));
         }
     }
+    public void setLibrary(Playlist library){
+        this.library = library;
+    }
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import interfaces.SerializableStrategy;
 import interfaces.Song;
 import javafx.scene.control.ListView;
 import javafx.scene.media.Media;
@@ -7,8 +8,11 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.Model;
+import model.Playlist;
 import view.View;
 import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Controller{
@@ -33,6 +37,8 @@ public class Controller{
         view.play(this::play);
         view.pause(this::pause);
         view.next(this::next);
+        view.load(this::load);
+        view.save(this::save);
     }
 
     private void newmp(){
@@ -114,5 +120,25 @@ public class Controller{
         if(tempSong == null)
             return;
         view.setMetaData(tempSong.getTitle(),tempSong.getInterpret(),tempSong.getAlbum());
+    }
+
+    private void load(){
+        SerializableStrategy strategy = view.getStrategy();
+        try {
+            strategy.openReadableLibrary();
+            model.setLibrary((Playlist)strategy.readLibrary());
+        }catch (IOException e){}
+        catch(ClassNotFoundException e){}
+        strategy.closeReadableLibrary();
+    }
+    private void save(){
+        SerializableStrategy strategy = view.getStrategy();
+        System.out.println(strategy);
+        try {
+            strategy.openWritableLibrary();
+            strategy.writeLibrary(model.getPlaylist());
+
+        }catch (IOException e){}
+        strategy.closeWritableLibrary();
     }
 }

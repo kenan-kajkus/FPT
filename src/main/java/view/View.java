@@ -93,6 +93,12 @@ public class View extends BorderPane {
     public void next(OnClick eh){
         nextsong.setOnAction(e -> eh.doOnclick());
     }
+    public void load(OnClick eh){
+        load.setOnAction(e -> eh.doOnclick());
+    }
+    public void save(OnClick eh){
+        save.setOnAction(e -> eh.doOnclick());
+    }
     //***---->>> GETTER
     public ListView<Song> getLibrary() {
         return library;
@@ -114,7 +120,7 @@ public class View extends BorderPane {
         return interpretText;
     }
 
-    private SerializableStrategy getStrategy(){
+    public SerializableStrategy getStrategy(){
         return strategyChoise.getSelectionModel().getSelectedItem();
     }
     //GETTER <<<---***
