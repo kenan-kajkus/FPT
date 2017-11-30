@@ -1,6 +1,9 @@
 package model;
 
 
+import IDGenerator.IDGenerator;
+import IDGenerator.IDOverFlowException;
+
 import java.io.File;
 
 public class Model{
@@ -17,8 +20,14 @@ public class Model{
 
     public void setLibrary(File[] files) {
         library.clear();
+        IDGenerator.setIDgenetator(library);
         for(File file: files){
-            library.add(new Song(file));
+            try {
+               library.add(new Song(file));
+            }catch (IDOverFlowException e){
+                System.err.println(e.getMessage());
+                return;
+            }
         }
     }
     public void setLibrary(Playlist library){

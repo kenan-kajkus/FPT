@@ -1,11 +1,31 @@
 package IDGenerator;
 
+
+import model.Playlist;
+import org.apache.openjpa.lib.meta.SourceTracker;
+
 public class IDGenerator {
-    private static long id = 0;
-    public static long getNextID() throws IDOverFlowException {
-        if(id>1000){
-            throw new IDOverFlowException();
+    private static boolean init = false;
+    private static Playlist lib;
+
+    public static long getNextID() throws IDOverFlowException, NotInitializedException {
+        if(!init){
+            throw new NotInitializedException();
         }
-        return id++;
+        if(lib.size()>9999){
+                throw new IDOverFlowException();
+        }
+
+        return lib.size();
+    }
+    public static void setIDgenetator(Playlist libt){
+        init = true;
+        lib = libt;
+    }
+
+    static class NotInitializedException extends RuntimeException{
+        NotInitializedException(){
+            super("IDGenerator not initialized");
+        }
     }
 }
