@@ -1,15 +1,11 @@
 package IDGenerator;
 
-import model.Playlist;
-import model.Song;
-
 public class IDGenerator {
-
-    public long getNextID(Song song) throws IDOverFlowException {
-        for (long id = 0; id < 9999; id++){
-            if (Playlist.findSongByID(id) == null){
-                return id;
-            }
-        } throw new IDOverFlowException();
+    private static long id = 0;
+    public static long getNextID() throws IDOverFlowException {
+        if(id>1000){
+            throw new IDOverFlowException();
+        }
+        return id++;
     }
 }
