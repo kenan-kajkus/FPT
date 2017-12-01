@@ -7,14 +7,14 @@ import javafx.beans.value.ObservableValue;
 import java.io.*;
 
 public class Song implements interfaces.Song, Serializable, Externalizable{
-    private long ID;
+    private long id;
     private SimpleStringProperty path = new SimpleStringProperty();
     private SimpleStringProperty title = new SimpleStringProperty();
     private SimpleStringProperty album = new SimpleStringProperty();
     private SimpleStringProperty interpret = new SimpleStringProperty();
 
     public Song(File path)throws IDOverFlowException{
-        this.ID = IDGenerator.getNextID();
+        this.id = IDGenerator.getNextID();
         this.path.set(path.toString());
         this.title.set(path.getName());
     }
@@ -61,13 +61,13 @@ public class Song implements interfaces.Song, Serializable, Externalizable{
 
     @Override
     public long getId() {
-        //TODO implementation later in project. for now it returns zero
-        return 0;
+        return id;
     }
 
     @Override
     public void setId(long id) {
-        //TODO implementation later in project.
+        //TODO maybe needs to check on IDOverFlow
+        this.id = id;
     }
 
     @Override
