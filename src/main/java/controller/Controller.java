@@ -12,7 +12,6 @@ import model.Playlist;
 import view.View;
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Controller{

@@ -22,8 +22,7 @@ public class IDGenerator {
         init = true;
         lib = libt;
     }
-
-    static class NotInitializedException extends RuntimeException{
+    private static class NotInitializedException extends RuntimeException{
         NotInitializedException(){
             super("IDGenerator not initialized");
         }
