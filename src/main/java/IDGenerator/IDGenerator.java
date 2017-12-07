@@ -2,14 +2,13 @@ package IDGenerator;
 
 
 import model.Playlist;
-import org.apache.openjpa.lib.meta.SourceTracker;
 
 public class IDGenerator {
-    private static boolean init = false;
+    private static boolean idGeneratorInit = false;
     private static Playlist lib;
 
     public static long getNextID() throws IDOverFlowException, NotInitializedException {
-        if(!init){
+        if(!idGeneratorInit){
             throw new NotInitializedException();
         }
         if(lib.size()>9999){
@@ -18,9 +17,9 @@ public class IDGenerator {
 
         return lib.size();
     }
-    public static void setIDgenetator(Playlist libt){
-        init = true;
-        lib = libt;
+    public static void setIdGenetator(Playlist libTemp){
+        idGeneratorInit = true;
+        lib = libTemp;
     }
     private static class NotInitializedException extends RuntimeException{
         NotInitializedException(){
