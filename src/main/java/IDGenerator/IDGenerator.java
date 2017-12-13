@@ -17,7 +17,7 @@ public class IDGenerator {
 
         return lib.size();
     }
-    public static void setIdGenetator(Playlist libTemp){
+    public static void setIdGenerator(Playlist libTemp){
         idGeneratorInit = true;
         lib = libTemp;
     }

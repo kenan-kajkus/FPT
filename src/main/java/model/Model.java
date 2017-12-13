@@ -20,7 +20,7 @@ public class Model{
 
     public void setLibrary(File[] files) {
         library.clear();
-        IDGenerator.setIdDenetator(library);
+        IDGenerator.setIdGenerator(library);
         for(File file: files){
             try {
                library.add(new Song(file));
