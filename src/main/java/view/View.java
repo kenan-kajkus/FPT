@@ -54,6 +54,34 @@ public class View extends BorderPane {
         setCenter(playlist);
         setRight(new VBox(metaData,musicplayer,toPlaylist,removeFromPlaylist));
         setBottom(addAll);
+        library.setCellFactory(e -> {
+            ListCell<Song> cell = new ListCell<Song>() {
+                @Override
+                protected void updateItem(Song myObject, boolean b) {
+                    super.updateItem(myObject, myObject == null || b);
+                    if (myObject != null) {
+                        setText(myObject.getTitle());
+                    } else { // wichtig da sonst der text stehen bleibt!
+                        setText("");
+                    }
+                }
+            };
+            return cell;
+        });
+        playlist.setCellFactory(e -> {
+            ListCell<Song> cell = new ListCell<Song>() {
+                @Override
+                protected void updateItem(Song myObject, boolean b) {
+                    super.updateItem(myObject, myObject == null || b);
+                    if (myObject != null) {
+                        setText(myObject.getTitle());
+                    } else { // wichtig da sonst der text stehen bleibt!
+                        setText("");
+                    }
+                }
+            };
+            return cell;
+        });
     }
     public void bindData(Playlist library, Playlist playlist) {
         this.library.setItems(library);
@@ -138,6 +166,14 @@ public class View extends BorderPane {
         alert.setTitle("No Files selected");
         alert.setHeaderText(null);
         alert.setContentText("Please chose files");
+
+        alert.showAndWait();
+    }
+    public void alertSaveFiles() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Saving Problem");
+        alert.setHeaderText(null);
+        alert.setContentText("Your files are not save");
 
         alert.showAndWait();
     }

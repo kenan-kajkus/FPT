@@ -5,6 +5,8 @@ import IDGenerator.IDGenerator;
 import IDGenerator.IDOverFlowException;
 
 import java.io.File;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public class Model{
     private Playlist library = new Playlist();
@@ -31,6 +33,18 @@ public class Model{
         }
     }
     public void setLibrary(Playlist library){
-        this.library = library;
+        this.library.clear();
+        for( interfaces.Song s: library){
+            this.library.add(s);
+        }
+    }
+
+    public void setPlaylist(Playlist songs) {
+        playlist.clear();
+        for(interfaces.Song s : songs){
+            try {
+                playlist.add(library.findSongByID(s.getId()));
+            }catch (RemoteException e){}
+        }
     }
 }

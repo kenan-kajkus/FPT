@@ -126,18 +126,33 @@ public class Controller{
         try {
             strategy.openReadableLibrary();
             model.setLibrary((Playlist)strategy.readLibrary());
-        }catch (IOException e){}
-        catch(ClassNotFoundException e){}
-        strategy.closeReadableLibrary();
+            strategy.closeReadableLibrary();
+            strategy.openReadablePlaylist();
+            model.setPlaylist((Playlist)strategy.readPlaylist());
+            strategy.closeReadablePlaylist();
+        }
+        catch (IOException e){ }
+        catch (ClassNotFoundException c){ }
+        finally {
+
+        }
     }
     private void save(){
         SerializableStrategy strategy = view.getStrategy();
-        System.out.println(strategy);
         try {
             strategy.openWritableLibrary();
-            strategy.writeLibrary(model.getPlaylist());
+            strategy.writeLibrary(model.getLibrary());
+            strategy.closeWritableLibrary();
+            strategy.openWritablePlaylist();
+            strategy.writePlaylist(model.getPlaylist());
+            strategy.closeWritablePlaylist();
+        }catch (IOException e){
+            view.alertSaveFiles();
+        }
+        finally {
+            strategy.closeWritableLibrary();
+            strategy.closeWritablePlaylist();
+        }
 
-        }catch (IOException e){}
-        strategy.closeWritableLibrary();
     }
 }

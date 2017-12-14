@@ -21,7 +21,7 @@ public class Playlist extends ModifiableObservableListBase<Song> implements inte
     }
 
     @Override
-    protected void doAdd(int index, Song element) {
+    public void doAdd(int index, Song element) {
         songs.add(element);
     }
 
@@ -37,7 +37,7 @@ public class Playlist extends ModifiableObservableListBase<Song> implements inte
 
     @Override
     public boolean addSong(Song s) throws RemoteException {
-        //TODO future use
+        this.add(s);
         return false;
     }
 
@@ -59,8 +59,7 @@ public class Playlist extends ModifiableObservableListBase<Song> implements inte
 
     @Override
     public ArrayList<Song> getList() throws RemoteException {
-        //TODO future use
-        return null;
+        return songs;
     }
 
     @Override
@@ -82,7 +81,11 @@ public class Playlist extends ModifiableObservableListBase<Song> implements inte
 
     @Override
     public Song findSongByID(long id) throws RemoteException {
-        //TODO future use
+        for(Song s: this){
+            if(s.getId()==id){
+                return s;
+            }
+        }
         return null;
     }
 }

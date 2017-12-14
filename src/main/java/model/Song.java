@@ -3,16 +3,16 @@ package model;
 import IDGenerator.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
-
 import java.io.*;
 
 public class Song implements interfaces.Song, Serializable, Externalizable{
+    public long serialVersionUID = 1;
     private long id;
     private SimpleStringProperty path = new SimpleStringProperty();
     private SimpleStringProperty title = new SimpleStringProperty();
     private SimpleStringProperty album = new SimpleStringProperty();
     private SimpleStringProperty interpret = new SimpleStringProperty();
-
+    public Song(){}
     public Song(File path)throws IDOverFlowException{
         this.id = IDGenerator.getNextID();
         this.path.set(path.toString());
