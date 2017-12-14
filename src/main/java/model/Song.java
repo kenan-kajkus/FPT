@@ -19,6 +19,14 @@ public class Song implements interfaces.Song, Serializable, Externalizable{
         this.title.set(path.getName());
     }
 
+    public Song(long id, String title, String interpret, String album, String path) {
+        this.id = id;
+        this.title.set(title);
+        this.interpret.set(interpret);
+        this.album.set(album);
+        this.path.set(path);
+    }
+
     @Override
     public String getAlbum() {
         return album.get() ;

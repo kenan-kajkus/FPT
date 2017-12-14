@@ -95,7 +95,7 @@ public class BinaryStrategy implements SerializableStrategy {
             oos.flush();
             oos.close();
         }catch (Exception e){
-            System.out.println("Problem Saving");
+            System.out.println("Problem Saving Lib");
         }
     }
 
@@ -120,10 +120,10 @@ public class BinaryStrategy implements SerializableStrategy {
     @Override
     public void closeReadablePlaylist() {
         try {
-            oos.flush();
-            oos.close();
+            ois.close();
+            fis.close();
         }catch (Exception e){
-            System.out.println("Problem Saving");
+            System.out.println("Problem Loading");
         }
     }
 

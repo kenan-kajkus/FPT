@@ -133,9 +133,6 @@ public class Controller{
         }
         catch (IOException e){ }
         catch (ClassNotFoundException c){ }
-        finally {
-
-        }
     }
     private void save(){
         SerializableStrategy strategy = view.getStrategy();
@@ -149,10 +146,5 @@ public class Controller{
         }catch (IOException e){
             view.alertSaveFiles();
         }
-        finally {
-            strategy.closeWritableLibrary();
-            strategy.closeWritablePlaylist();
-        }
-
     }
 }
