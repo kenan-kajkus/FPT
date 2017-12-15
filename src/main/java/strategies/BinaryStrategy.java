@@ -94,6 +94,7 @@ public class BinaryStrategy implements SerializableStrategy {
         try {
             oos.flush();
             oos.close();
+            fos.close();
         }catch (Exception e){
             System.out.println("Problem Saving Lib");
         }
@@ -112,6 +113,7 @@ public class BinaryStrategy implements SerializableStrategy {
         try {
             oos.flush();
             oos.close();
+            fos.close();
         }catch (Exception e){
             System.out.println("Problem Saving");
         }
