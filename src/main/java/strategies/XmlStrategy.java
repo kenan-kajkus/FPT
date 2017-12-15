@@ -12,42 +12,42 @@ public class XmlStrategy implements SerializableStrategy {
     private File libraryPath = new File("library.xml");
     private File playlistPath = new File("playlist.xml");
 
-    private BufferedInputStream fis;
-    private BufferedOutputStream fos;
+    private BufferedInputStream bufferedXmlInputStream;
+    private BufferedOutputStream bufferedXmlOutputStream;
     private XMLDecoder decoder;
     private XMLEncoder encoder;
     @Override
     public void openWritableLibrary() throws IOException {
-        fos = new BufferedOutputStream(new FileOutputStream(libraryPath));
-        encoder = new XMLEncoder(fos);
+        bufferedXmlOutputStream = new BufferedOutputStream(new FileOutputStream(libraryPath));
+        encoder = new XMLEncoder(bufferedXmlOutputStream);
     }
 
     @Override
     public void openReadableLibrary() throws IOException {
-        fis = new BufferedInputStream(new FileInputStream(libraryPath));
-        decoder = new XMLDecoder(fis);
+        bufferedXmlInputStream = new BufferedInputStream(new FileInputStream(libraryPath));
+        decoder = new XMLDecoder(bufferedXmlInputStream);
     }
 
     @Override
     public void openWritablePlaylist() throws IOException {
-        fos = new BufferedOutputStream(new FileOutputStream(playlistPath));
-        encoder = new XMLEncoder(fos);
+        bufferedXmlOutputStream = new BufferedOutputStream(new FileOutputStream(playlistPath));
+        encoder = new XMLEncoder(bufferedXmlOutputStream);
     }
 
     @Override
     public void openReadablePlaylist() throws IOException {
-        fis = new BufferedInputStream(new FileInputStream(playlistPath));
-        decoder = new XMLDecoder(fis);
+        bufferedXmlInputStream = new BufferedInputStream(new FileInputStream(playlistPath));
+        decoder = new XMLDecoder(bufferedXmlInputStream);
     }
 
     @Override
     public void writeSong(Song s) throws IOException {
-
+        //not needed can write playlist as whole
     }
 
     @Override
     public Song readSong() throws IOException, ClassNotFoundException {
-        return null;
+        return null; // same as writeSong()
     }
 
     @Override
@@ -63,7 +63,7 @@ public class XmlStrategy implements SerializableStrategy {
 
     @Override
     public void writePlaylist(Playlist p) throws IOException {
-        encoder.writeObject(p);
+        encoder.writeObject(p);// works via getter/setter (add() and get())
     }
 
     @Override
@@ -74,24 +74,40 @@ public class XmlStrategy implements SerializableStrategy {
     @Override
     public void closeWritableLibrary() {
         encoder.close();
-        System.out.println("test");
+        closeWritable();
     }
 
     @Override
     public void closeReadableLibrary() {
         decoder.close();
-
-        System.out.println("test");
+        closeReadable();
     }
 
     @Override
     public void closeWritablePlaylist() {
         encoder.close();
+        closeWritable();
     }
 
     @Override
     public void closeReadablePlaylist() {
         decoder.close();
+        closeReadable();
+    }
+    private void closeWritable(){
+        try {
+            bufferedXmlOutputStream.close();
+        } catch (IOException e) {
+            System.err.println("Problem saving to XML");
+        }
+    }
+
+    private void closeReadable(){
+        try {
+            bufferedXmlInputStream.close();
+        } catch (IOException e) {
+            System.err.println("Problem reading from XML");
+        }
     }
     @Override
     public String toString() {
