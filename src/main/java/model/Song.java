@@ -3,14 +3,33 @@ package model;
 import IDGenerator.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
-import java.io.*;
+import org.apache.openjpa.persistence.Persistent;
+import org.apache.openjpa.persistence.jdbc.Strategy;
 
+import javax.persistence.*;
+import java.io.*;
+@Entity()
+@Table(name ="Library")
 public class Song implements interfaces.Song, Serializable, Externalizable{
+    @Transient
     public long serialVersionUID = 1;
+    @Id
     private long id;
+    @Persistent
+    @Strategy("strategies.StringPropertyValueHandler")
+    @Column(name="Path")
     private SimpleStringProperty path = new SimpleStringProperty();
+    @Persistent
+    @Strategy("strategies.StringPropertyValueHandler")
+    @Column(name="Title")
     private SimpleStringProperty title = new SimpleStringProperty();
+    @Persistent
+    @Strategy("strategies.StringPropertyValueHandler")
+    @Column(name="Album")
     private SimpleStringProperty album = new SimpleStringProperty();
+    @Persistent
+    @Strategy("strategies.StringPropertyValueHandler")
+    @Column(name="Artist")
     private SimpleStringProperty interpret = new SimpleStringProperty();
     public Song(){}
     public Song(File path)throws IDOverFlowException{
@@ -28,6 +47,7 @@ public class Song implements interfaces.Song, Serializable, Externalizable{
     }
 
     @Override
+
     public String getAlbum() {
         return album.get() ;
     }
@@ -38,6 +58,8 @@ public class Song implements interfaces.Song, Serializable, Externalizable{
     }
 
     @Override
+
+
     public String getInterpret() {
         return interpret.get();
     }
@@ -48,6 +70,7 @@ public class Song implements interfaces.Song, Serializable, Externalizable{
     }
 
     @Override
+
     public String getPath() {
         return path.get();
     }
@@ -68,6 +91,7 @@ public class Song implements interfaces.Song, Serializable, Externalizable{
     }
 
     @Override
+
     public long getId() {
         return id;
     }

@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import model.Playlist;
 import strategies.BinaryStrategy;
 import strategies.JdbcStrategy;
+import strategies.OpenJpaStrategy;
 import strategies.XmlStrategy;
 
 /**
@@ -90,8 +91,7 @@ public class View extends BorderPane {
             new BinaryStrategy(),
                 new XmlStrategy(),
                 new JdbcStrategy(),
-                new XmlStrategy()
-
+                new OpenJpaStrategy()
         );
     }
     public void showLibMeta(OnClick eh){

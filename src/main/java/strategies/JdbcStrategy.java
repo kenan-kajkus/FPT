@@ -20,9 +20,20 @@ public class JdbcStrategy implements SerializableStrategy {
         }
         try {
             con = DriverManager.getConnection("jdbc:sqlite:music.db");
+            PreparedStatement p;
+            try {
+                p = con.prepareStatement("DROP TABLE library;");
+                p.execute();
+            }catch(SQLException sqlE){
+                System.out.println("test");
+            }
+            p = con.prepareStatement("CREATE TABLE Library ( `ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `Title` TEXT, `Artist` TEXT, `Album` TEXT, `Path` TEXT );");
+            p.execute();
         }catch(SQLException e){
+            System.out.println("test");
             e.printStackTrace();
         }
+
     }
 
     @Override
