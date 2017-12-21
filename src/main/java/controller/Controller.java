@@ -20,6 +20,7 @@ public class Controller{
     private MediaPlayer mp;
     private Model model;
     private View view;
+    private Song metaSong;
     public void link(View view, Model model){
         this.view = view;
         this.model = model;
@@ -59,10 +60,11 @@ public class Controller{
     }
 
     private void commit(){
-        Song song = view.getLibrary().getSelectionModel().getSelectedItem();
-        song.setInterpret(view.getInterpretText().getText());
-        song.setAlbum(view.getAlbumText().getText());
-        song.setTitle(view.getTitleText().getText());
+        metaSong.setInterpret(view.getInterpretText().getText());
+        metaSong.setAlbum(view.getAlbumText().getText());
+        metaSong.setTitle(view.getTitleText().getText());
+        view.getLibrary().refresh();
+        view.getPlaylist().refresh();
     }
     private void play(){
         if(m==null)
@@ -115,10 +117,10 @@ public class Controller{
     }
 
     private void showMetaData(ListView<Song> listView){
-        Song tempSong = listView.getSelectionModel().getSelectedItem();
-        if(tempSong == null)
+        metaSong = listView.getSelectionModel().getSelectedItem();
+        if(metaSong == null)
             return;
-        view.setMetaData(tempSong.getTitle(),tempSong.getInterpret(),tempSong.getAlbum());
+        view.setMetaData(metaSong.getTitle(),metaSong.getInterpret(),metaSong.getAlbum());
     }
 
     private void load(){
