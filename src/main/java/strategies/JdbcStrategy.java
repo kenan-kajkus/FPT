@@ -13,6 +13,7 @@ public class JdbcStrategy implements SerializableStrategy {
     DatabaseMetaData dmd;
     @Override
     public void openWritableLibrary() throws IOException {
+
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
@@ -20,18 +21,16 @@ public class JdbcStrategy implements SerializableStrategy {
         }
         try {
             con = DriverManager.getConnection("jdbc:sqlite:music.db");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        try {
             PreparedStatement p;
-            try {
-                p = con.prepareStatement("DROP TABLE library;");
-                p.execute();
-            }catch(SQLException sqlE){
-                System.out.println("test");
-            }
             p = con.prepareStatement("CREATE TABLE Library ( `ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `Title` TEXT, `Artist` TEXT, `Album` TEXT, `Path` TEXT );");
             p.execute();
-        }catch(SQLException e){
-            System.out.println("test");
-            e.printStackTrace();
+            p.close();
+        }catch (SQLException e){
+            System.out.println("DB Exist");
         }
 
     }
@@ -63,19 +62,15 @@ public class JdbcStrategy implements SerializableStrategy {
     @Override
     public void writeSong(Song s) throws IOException {
         try{
-            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO "+into+"(Title,Artist,Album,Path) VALUES(?,?,?,?);",Statement.RETURN_GENERATED_KEYS );
-            preparedStatement.setString(1,s.getTitle());
-            preparedStatement.setString(2,s.getInterpret());
-            preparedStatement.setString(3,s.getAlbum());
-            preparedStatement.setString(4,s.getPath());
+            PreparedStatement preparedStatement = con.prepareStatement(
+                    "INSERT OR REPLACE INTO "+into+" (id,title,Artist,album,path)"+
+                    "VALUES (  ?, ?, ? ,?, ?)");
+            preparedStatement.setLong(1,s.getId());
+            preparedStatement.setString(2,s.getTitle());
+            preparedStatement.setString(3,s.getInterpret());
+            preparedStatement.setString(4,s.getAlbum());
+            preparedStatement.setString(5,s.getPath());
             preparedStatement.executeUpdate();
-            ResultSet rs = preparedStatement.getGeneratedKeys();
-            Long result = null;
-            while (rs.next()) {
-                result = rs.getLong(1);
-            }
-            //resultSet = preparedStatement.getGeneratedKeys();
-            rs.close();
             preparedStatement.close();
 
         } catch (SQLException e) {
@@ -91,12 +86,6 @@ public class JdbcStrategy implements SerializableStrategy {
     @Override
     public void writeLibrary(Playlist p) throws IOException {
         into = "Library";
-        try {
-            PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM "+into);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         for(Song s : p){
             writeSong(s);
         }
@@ -126,12 +115,6 @@ public class JdbcStrategy implements SerializableStrategy {
     @Override
     public void writePlaylist(Playlist p) throws IOException {
         into = "Playlist";
-        try {
-            PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM "+into);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         for(Song s : p){
             writeSong(s);
         }
