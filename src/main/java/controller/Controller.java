@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Controller{
     private Media m;
     private int currentSong = 0;
-    private MediaPlayer mp;
+    private MediaPlayer musicPlayer;
     private Model model;
     private View view;
     private Song metaSong;
@@ -44,15 +44,15 @@ public class Controller{
     private void newmp(){
         if (++currentSong >= model.getPlaylist().size())
             currentSong = 0;
-        mp = new MediaPlayer(new Media(new File(model.getPlaylist().get(currentSong).getPath()).toURI().toString()));
-        mp.play();
-        mp.setOnEndOfMedia(this::newmp);
+        musicPlayer = new MediaPlayer(new Media(new File(model.getPlaylist().get(currentSong).getPath()).toURI().toString()));
+        musicPlayer.play();
+        musicPlayer.setOnEndOfMedia(this::newmp);
         System.gc();
     }
 
-    private void addToPlaylist(Song s) {
-        if(s!=null)
-            model.getPlaylist().add(s);
+    private void addToPlaylist(Song songToAdd) {
+        if(songToAdd!=null)
+            model.getPlaylist().add(songToAdd);
     }
 
     private void removeFromPlaylist(){
@@ -69,22 +69,22 @@ public class Controller{
     private void play(){
         if(m==null)
             m  = new Media(new File(model.getPlaylist().get(0).getPath()).toURI().toString());
-        if(mp==null) {
-            mp = new MediaPlayer(m);
-            mp.setOnEndOfMedia(this::newmp);
+        if(musicPlayer ==null) {
+            musicPlayer = new MediaPlayer(m);
+            musicPlayer.setOnEndOfMedia(this::newmp);
         }
-        mp.play();
+        musicPlayer.play();
     }
     private void pause(){
-        mp.pause();
+        musicPlayer.pause();
     }
     private void next(){
-        mp.stop();
+        musicPlayer.stop();
         if (++currentSong >= model.getPlaylist().size())
             currentSong = 0;
-        mp = new MediaPlayer(new Media(new File(model.getPlaylist().get(currentSong).getPath()).toURI().toString()));
-        mp.setOnEndOfMedia(this::newmp);
-        mp.play();
+        musicPlayer = new MediaPlayer(new Media(new File(model.getPlaylist().get(currentSong).getPath()).toURI().toString()));
+        musicPlayer.setOnEndOfMedia(this::newmp);
+        musicPlayer.play();
     }
     private void addLib(){
         File libFolder;
