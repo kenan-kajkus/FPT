@@ -3,6 +3,7 @@ package strategies;
 import interfaces.Playlist;
 import interfaces.SerializableStrategy;
 import interfaces.Song;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
 import java.sql.*;
@@ -13,7 +14,6 @@ public class JdbcStrategy implements SerializableStrategy {
     DatabaseMetaData dmd;
     @Override
     public void openWritableLibrary() throws IOException {
-
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
@@ -21,18 +21,32 @@ public class JdbcStrategy implements SerializableStrategy {
         }
         try {
             con = DriverManager.getConnection("jdbc:sqlite:music.db");
-        }catch(SQLException e){
+        }catch(Exception e){
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Saving Problem");
+            alert.setHeaderText("No Database found!");
+            alert.setContentText("Creating new database");
+            alert.showAndWait();
+        }
+        try {
+            PreparedStatement p = con.prepareStatement("SELECT name FROM sqlite_master WHERE type='table' and name='library';");
+            p.executeQuery();
+            ResultSet rs = p.getResultSet();
+            rs.next();
+            rs.close();
+            p.close();
+        }catch (SQLException e){
             e.printStackTrace();
         }
         try {
-            PreparedStatement p;
-            p = con.prepareStatement("CREATE TABLE Library ( `ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `Title` TEXT, `Artist` TEXT, `Album` TEXT, `Path` TEXT );");
-            p.execute();
-            p.close();
+            PreparedStatement q;
+            q = con.prepareStatement("CREATE TABLE Library ( `ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `Title` TEXT, `Artist` TEXT, `Album` TEXT, `Path` TEXT );");
+            q.execute();
+            q.close();
         }catch (SQLException e){
             System.out.println("DB Exist");
         }
-
     }
 
     @Override
@@ -45,7 +59,12 @@ public class JdbcStrategy implements SerializableStrategy {
         try {
             con = DriverManager.getConnection("jdbc:sqlite:music.db");
         }catch(SQLException e){
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Loading Problem");
+            alert.setHeaderText(null);
+            alert.setContentText("No Database found");
+
+            alert.showAndWait();
         }
     }
 
@@ -123,22 +142,28 @@ public class JdbcStrategy implements SerializableStrategy {
     @Override
     public Playlist readPlaylist() throws IOException, ClassNotFoundException {
         model.Playlist lib = new model.Playlist();
-        try  {
-            PreparedStatement preparedStatement = con.prepareStatement("SELECT ID,Title,Artist,Album,Path FROM Playlist");
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while(resultSet.next()) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = con.prepareStatement("SELECT ID,Title,Artist,Album,Path FROM Playlist");
+            resultSet = preparedStatement.executeQuery();
+        }catch (SQLException e) {
+            System.out.println("Mööp, No table Playlist");
+        }
+        try {
+            while (resultSet!=null&&resultSet.next()) {
                 long id = Long.parseLong(resultSet.getString("ID"));
                 String title = resultSet.getString("Title");
                 String interpret = resultSet.getString("Artist");
                 String album = resultSet.getString("Album");
                 String path = resultSet.getString("Path");
-                lib.add(new model.Song(id,title,interpret,album,path));
+                lib.add(new model.Song(id, title, interpret, album, path));
             }
-            return lib;
-        }catch (SQLException e) {
+        }catch (SQLException e){
             e.printStackTrace();
-        }return lib;
+        }
+        return lib;
+
     }
 
     @Override

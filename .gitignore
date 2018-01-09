@@ -168,3 +168,5 @@ buildNumber.properties
 
 # End of https://www.gitignore.io/api/java,maven,eclipse,intellij
 /music.db
+/library.xml
+/playlist.xml
