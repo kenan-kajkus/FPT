@@ -7,6 +7,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Model;
 import model.Playlist;
 import view.View;
@@ -148,5 +149,14 @@ public class Controller{
         }catch (IOException e){
             view.alertSaveFiles();
         }
+    }
+    public Duration getTime(){
+        if(musicPlayer==null)
+            return new Duration(0);
+        Duration duration;
+        if((duration=musicPlayer.getCurrentTime())==null)
+            return new Duration(0);
+        return duration;
+
     }
 }
