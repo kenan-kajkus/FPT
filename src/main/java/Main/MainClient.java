@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -14,11 +14,11 @@ public class MainClient extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         ClientView view = new ClientView();
+        PlaytimeClient pc = new PlaytimeClient(view);
+        Thread client = new Thread(pc);
+        client.start();
         Scene ClientScene = new Scene(view);
         primaryStage.setScene(ClientScene);
         primaryStage.show();
-        PlaytimeClient pc = new PlaytimeClient();
-        Thread client = new Thread(pc);
-        client.start();
     }
 }

@@ -1,8 +1,7 @@
-package Main;
+package main;
 
 import controller.Controller;
 import model.Model;
-import udp.PlaytimeClient;
 import udp.PlaytimeServer;
 import view.View;
 import javafx.application.Application;
@@ -20,7 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        PlaytimeServer ps = new PlaytimeServer();
+        PlaytimeServer ps = new PlaytimeServer(vc);
         Thread server = new Thread(ps);
         server.start();
         Scene sc = new Scene(view);
