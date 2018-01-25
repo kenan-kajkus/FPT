@@ -8,7 +8,9 @@ public class TCPClient implements Runnable{
     public void run() {
         try(Socket serverCon = new Socket("localhost",5020);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(serverCon.getOutputStream()));) {
-            out.write("hello");
+            out.write("name");
+            out.newLine();
+            out.write("password");
             out.flush();
         }catch (IOException e){
             e.printStackTrace();

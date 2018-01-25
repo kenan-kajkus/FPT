@@ -2,6 +2,8 @@ package main;
 
 import controller.Controller;
 import model.Model;
+import tcp.TCPClient;
+import tcp.TCPServer;
 import udp.PlaytimeServer;
 import view.View;
 import javafx.application.Application;
@@ -22,6 +24,10 @@ public class Main extends Application {
         PlaytimeServer ps = new PlaytimeServer(vc);
         Thread server = new Thread(ps);
         server.start();
+        TCPServer tcpServer = new TCPServer();
+        Thread tcpThread = new Thread(tcpServer);
+        tcpThread.start();
+        ;
         Scene sc = new Scene(view);
         primaryStage.setScene(sc);
         primaryStage.show();
