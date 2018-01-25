@@ -27,7 +27,6 @@ public class Main extends Application {
         TCPServer tcpServer = new TCPServer();
         Thread tcpThread = new Thread(tcpServer);
         tcpThread.start();
-        ;
         Scene sc = new Scene(view);
         primaryStage.setScene(sc);
         primaryStage.show();
